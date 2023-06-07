@@ -1,4 +1,4 @@
-import { fetchAndRenderTasks, fetchPromise, updateUsersComments } from './api.js';
+import { fetchAndRenderTasks, fetchPromise } from './api.js';
 import { renderUsersComments } from "./render.js";
 
 const buttonElement = document.getElementById("add-button");
@@ -12,7 +12,7 @@ let currenDate = new Date();
 // GET-запрос связка данных с сервером с помощью API
 
 
-let usersComments = [
+export let usersComments = [
     // {
     //   date: "12.02.22 12:18",
     //   likes: 3,
@@ -28,6 +28,10 @@ let usersComments = [
     //   isLiked: false,
     // },
 ];
+
+export function updateUsersComments(newComments) {
+    usersComments = newComments;
+};
 
 // Рендер-функция 
 
@@ -62,7 +66,7 @@ renderUsersComments(usersComments, listElement);
 
 //Хорошая функция добавления лайка с использованием stopPropagation
 
-function toggleLike() {
+export function toggleLike() {
 
     const likeButtons = document.querySelectorAll('.like-button');
     addCommentReplyHandlers();
@@ -86,7 +90,7 @@ function toggleLike() {
 
 // Функция отключения кнопки "написать" при незаполненных input
 
-function checkCommentFields() {
+export function checkCommentFields() {
 
     function togglePublishButton(buttonElement) {
         if (inputNameElement.value.trim() === "" || inputTextElement.value.trim() === "") {
@@ -102,7 +106,7 @@ function checkCommentFields() {
 
 // Функция для ответа на комментарий
 
-function addCommentReplyHandlers() {
+export function addCommentReplyHandlers() {
     const commentElements = document.querySelectorAll(".comment");
 
     for (const commentElement of commentElements) {

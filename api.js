@@ -1,13 +1,10 @@
+import { usersComments, updateUsersComments } from "./main.js";
+import { renderUsersComments } from "./render.js";
+
 const listElement = document.getElementById("list");
 const inputNameElement = document.getElementById("name");
 const inputTextElement = document.getElementById("comment-text");
 const addForm = document.getElementById("add-form-block");
-
-
-export function updateUsersComments() {
-    usersComments = appComments;
-};
-
 
 export const fetchAndRenderTasks = () => {
     return fetch(
@@ -37,21 +34,18 @@ export const fetchAndRenderTasks = () => {
                     isLikes: false,
                 };
             });
-
-            updateUsersComments();
+            updateUsersComments(appComments);
 
             renderUsersComments(usersComments, listElement);
         }).catch((error) => {
             alert("Что-то пошло не так, повторите попытку позже.");
+            console.warn(error);
         });
 }
 
-
 let loadingForm = document.querySelector('.form-loading');
-loadingForm.style.display = 'block';
-addForm.style.display = 'none';
-
-
+loadingForm.style.display = 'none';
+addForm.style.display = 'block';
 
 export const fetchPromise = () => {
     return fetch(
@@ -83,8 +77,8 @@ export const fetchPromise = () => {
         // <div class="add-form-row">
         // <button id="add-button" class="add-form-button">Написать</button>
         // </div>`;
-        loadingForm.style.display = 'none';
-        addForm.style.display = 'block';
+        loadingForm.style.display = 'block';
+        addForm.style.display = 'none';
         renderUsersComments(usersComments, listElement);
     }).catch((error) => {
         if (error.message === "Сервер упал") {
@@ -95,8 +89,8 @@ export const fetchPromise = () => {
             alert("Что-то пошло не так, повторите попытку позже.");
         }
         console.warn(error);
-        loadingForm.style.display = 'none';
-        addForm.style.display = 'block';
+        loadingForm.style.display = 'block';
+        addForm.style.display = 'none';
     });
 };
 

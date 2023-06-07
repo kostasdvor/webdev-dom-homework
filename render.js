@@ -1,3 +1,5 @@
+import { toggleLike, checkCommentFields, addCommentReplyHandlers } from "./main.js";
+
 export const renderUsersComments = (usersComments, listElement) => {
     const usersCommentsHTML = usersComments.map((usersComment, index) => {
         return `<ul id="list" class="comment">
@@ -20,4 +22,9 @@ export const renderUsersComments = (usersComments, listElement) => {
     }).join('');
 
     listElement.innerHTML = usersCommentsHTML;
-};  
+    toggleLike();
+    checkCommentFields();
+    addCommentReplyHandlers();
+
+};
+
