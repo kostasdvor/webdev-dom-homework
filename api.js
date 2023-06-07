@@ -3,6 +3,12 @@ const inputNameElement = document.getElementById("name");
 const inputTextElement = document.getElementById("comment-text");
 const addForm = document.getElementById("add-form-block");
 
+
+export function updateUsersComments() {
+    usersComments = appComments;
+};
+
+
 export const fetchAndRenderTasks = () => {
     return fetch(
         "https://webdev-hw-api.vercel.app/api/v1/kostasdvor/comments",
@@ -32,11 +38,11 @@ export const fetchAndRenderTasks = () => {
                 };
             });
 
-            usersComments = appComments;
+            updateUsersComments();
+
             renderUsersComments(usersComments, listElement);
         }).catch((error) => {
             alert("Что-то пошло не так, повторите попытку позже.");
-            console.warn(error);
         });
 }
 
@@ -47,32 +53,28 @@ addForm.style.display = 'none';
 
 
 
-export const fetchPromise = fetch(
-    "https://webdev-hw-api.vercel.app/api/v1/kostasdvor/comments",
-    {
-        method: "POST",
-        body: JSON.stringify({
-            // date: formatDateTime(currentDate),
-            // likes: 0,
-            // isLiked: false,
-            text: inputTextElement.value,
-            name: inputNameElement.value,
-        }),
-    }
-);
-
-fetchPromise
-    .then((response) => {
+export const fetchPromise = () => {
+    return fetch(
+        "https://webdev-hw-api.vercel.app/api/v1/kostasdvor/comments",
+        {
+            method: "POST",
+            body: JSON.stringify({
+                // date: formatDateTime(currentDate),
+                // likes: 0,
+                // isLiked: false,
+                text: inputTextElement.value,
+                name: inputNameElement.value,
+            }),
+        }
+    ).then((response) => {
         if (response.status === 500) {
             throw new Error("Сервер упал");
         } else if (response.status === 400) {
             throw new Error("Плохой запрос");
-        }
-        else {
+        } else {
             return response.json();
         }
-    })
-    .then((responseData) => {
+    }).then((responseData) => {
         return fetchAndRenderTasks();
     }).then(() => {
         // addForm.innerHTML = `<input id="name" type="text" class="add-form-name" placeholder="Введите ваше имя" />
@@ -84,21 +86,19 @@ fetchPromise
         loadingForm.style.display = 'none';
         addForm.style.display = 'block';
         renderUsersComments(usersComments, listElement);
-
-    })
-    .catch((error) => {
+    }).catch((error) => {
         if (error.message === "Сервер упал") {
             alert("Сервер упал, повторите попытку позже");
         } else if (error.message === "Плохой запрос") {
             alert("Поля ввода должны содержать минимум 3 символа");
         } else {
             alert("Что-то пошло не так, повторите попытку позже.");
-        };
+        }
         console.warn(error);
         loadingForm.style.display = 'none';
         addForm.style.display = 'block';
-
     });
+};
 
 
 

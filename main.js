@@ -1,4 +1,4 @@
-import { fetchAndRenderTasks, fetchPromise } from './api.js';
+import { fetchAndRenderTasks, fetchPromise, updateUsersComments } from './api.js';
 import { renderUsersComments } from "./render.js";
 
 const buttonElement = document.getElementById("add-button");
