@@ -186,7 +186,7 @@ buttonElement.addEventListener("click", () => {
     // });
 
     // Получение новых комментов на сервер с помощью API
-
+    fetchPromise();
     checkCommentFields();
 });
 

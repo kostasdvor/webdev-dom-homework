@@ -77,8 +77,8 @@ export const fetchPromise = () => {
         // <div class="add-form-row">
         // <button id="add-button" class="add-form-button">Написать</button>
         // </div>`;
-        loadingForm.style.display = 'block';
-        addForm.style.display = 'none';
+        loadingForm.style.display = 'none';
+        addForm.style.display = 'block';
         renderUsersComments(usersComments, listElement);
     }).catch((error) => {
         if (error.message === "Сервер упал") {
